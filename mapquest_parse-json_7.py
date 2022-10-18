@@ -5,6 +5,18 @@ from prettytable import PrettyTable
 main_api = "https://www.mapquestapi.com/directions/v2/route?"
 key = "CLEOBL0GrYWUqQ1hKIOdbp4mE6XMAY35" #Replace with MapQuest key
 
+class color:
+    PURPLE = '\033[95m'
+    CYAN = '\033[96m'
+    DARKCYAN = '\033[36m'
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    END = '\033[0m'
+
 while True:
     orig = input("Starting Location: ")
     if orig == "quit" or orig == "q":
@@ -22,10 +34,10 @@ while True:
         if json_status == 0:
             print("API Status: " + str(json_status) + " = A successful route call.\n")
             print("=============================================")
-            print("Directions from " + (orig) + " to " + (dest))
-            print("Trip Duration: " + (json_data["route"]["formattedTime"]))
-            print("Kilometers:: " + str("{:.2f}".format((json_data["route"]["distance"])*1.61)))
-            print("Fuel Used (Ltr): " + str("{:.2f}".format((json_data["route"]["fuelUsed"])*3.78)))
+            print("Directions from " + color.BOLD + (orig) + color.END + " to " + color.BOLD + (dest) + color.END)
+            print(color.BOLD + "Trip Duration: " + color.END + "" + color.GREEN + (json_data["route"]["formattedTime"]) + color.END)
+            print(color.BOLD + "Kilometers:: " + color.END + "" +  color.GREEN + str("{:.2f}".format((json_data["route"]["distance"])*1.61)) + color.END)
+            print(color.BOLD + "Fuel Used (Ltr): " + color.END + "" +  color.GREEN + str("{:.2f}".format((json_data["route"]["fuelUsed"])*3.78)) + color.END)
             print("=============================================")
             myTable = PrettyTable(["No.","Narrative"])
             count = 1
@@ -57,10 +69,10 @@ while True:
         if json_status == 0:
             print("API Status: " + str(json_status) + " = A successful route call.\n")
             print("=============================================")
-            print("Directions from " + (orig) + " to " + (dest))
-            print("Trip Duration: " + (json_data["route"]["formattedTime"]))
-            print("Miles: " + str("{:.2f}".format(json_data["route"]["distance"])))
-            print("Fuel Used (Ltr): " + str("{:.2f}".format((json_data["route"]["fuelUsed"])*3.78)))
+            print("Directions from " + color.BOLD + (orig) + color.END + " to " + color.BOLD + (dest) + color.END)
+            print(color.BOLD + "Trip Duration: " + color.END + "" + color.GREEN + (json_data["route"]["formattedTime"]) + color.END)
+            print(color.BOLD + "Miles: " + color.END + "" +  color.GREEN + str("{:.2f}".format(json_data["route"]["distance"])) + color.END)
+            print(color.BOLD + "Fuel Used (Ltr): " + color.END + "" +  color.GREEN + str("{:.2f}".format((json_data["route"]["fuelUsed"])*3.78)) + color.END)
             print("=============================================")
             myTable = PrettyTable(["No.","Narrative"])
             count = 1

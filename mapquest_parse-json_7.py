@@ -1,5 +1,6 @@
 import urllib.parse
 import requests
+from prettytable import PrettyTable
 
 main_api = "https://www.mapquestapi.com/directions/v2/route?"
 key = "CLEOBL0GrYWUqQ1hKIOdbp4mE6XMAY35" #Replace with MapQuest key
@@ -24,8 +25,13 @@ while True:
         print("Kilometers:: " + str("{:.2f}".format((json_data["route"]["distance"])*1.61)))
         print("Fuel Used (Ltr): " + str("{:.2f}".format((json_data["route"]["fuelUsed"])*3.78)))
         print("=============================================")
+        myTable = PrettyTable(["No.","Narrative"])
+        count = 1
         for each in json_data["route"]["legs"][0]["maneuvers"]:
-            print((each["narrative"]) + " (" + str("{:.2f}".format((each["distance"])*1.61) + " km)"))
+            myTable.add_row([count, (each["narrative"]) + " (" + str("{:.2f}".format((each["distance"])*1.61) + " km)")])
+            count+=1
+            #print((each["narrative"]) + " (" + str("{:.2f}".format((each["distance"])*1.61) + " km)"))
+        print(myTable)
         print("=============================================\n")
     elif json_status == 402:
         print("**********************************************")

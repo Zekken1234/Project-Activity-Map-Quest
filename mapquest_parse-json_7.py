@@ -5,6 +5,7 @@ from prettytable import PrettyTable
 main_api = "https://www.mapquestapi.com/directions/v2/route?"
 key = "CLEOBL0GrYWUqQ1hKIOdbp4mE6XMAY35" #Replace with MapQuest key
 
+#Class for colors
 class color:
     PURPLE = '\033[95m'
     CYAN = '\033[96m'
@@ -18,13 +19,16 @@ class color:
     END = '\033[0m'
 
 while True:
+    #Ask for user input
     orig = input("Starting Location: ")
     if orig == "quit" or orig == "q":
         break
     dest = input("Destination: ")
     if dest == "quit" or dest == "q":
         break
+    #Option for metric or miles
     measurement = input("Choose what type of measurement to use (\'Metric\' or \'Miles\'): ")
+    #Metric tree
     if measurement == "Metric" or measurement == "metric" :
         url = main_api + urllib.parse.urlencode({"key":key, "from":orig, "to":dest})
         json_data = requests.get(url).json()
@@ -39,12 +43,13 @@ while True:
             print(color.BOLD + "Kilometers:: " + color.END + "" +  color.GREEN + str("{:.2f}".format((json_data["route"]["distance"])*1.61)) + color.END)
             print(color.BOLD + "Fuel Used (Ltr): " + color.END + "" +  color.GREEN + str("{:.2f}".format((json_data["route"]["fuelUsed"])*3.78)) + color.END)
             print("=============================================")
+            #Create table
             myTable = PrettyTable(["No.","Narrative"])
             count = 1
+            #Add to data to table
             for each in json_data["route"]["legs"][0]["maneuvers"]:
                 myTable.add_row([count, (each["narrative"]) + " (" + str("{:.2f}".format((each["distance"])*1.61) + " km)")])
                 count+=1
-                #print((each["narrative"]) + " (" + str("{:.2f}".format((each["distance"])*1.61) + " km)"))
             print(myTable)
             print("=============================================\n")
         elif json_status == 402:
@@ -60,6 +65,7 @@ while True:
             print("For Staus Code: " + str(json_status) + "; Refer to:")
             print("https://developer.mapquest.com/documentation/directions-api/status-codes")
             print("************************************************************************\n")
+    #Miles tree
     elif measurement == "Miles" or measurement == "miles" :
         url = main_api + urllib.parse.urlencode({"key":key, "from":orig, "to":dest})
         json_data = requests.get(url).json()
@@ -74,8 +80,10 @@ while True:
             print(color.BOLD + "Miles: " + color.END + "" +  color.GREEN + str("{:.2f}".format(json_data["route"]["distance"])) + color.END)
             print(color.BOLD + "Fuel Used (Ltr): " + color.END + "" +  color.GREEN + str("{:.2f}".format((json_data["route"]["fuelUsed"])*3.78)) + color.END)
             print("=============================================")
+            #Create table
             myTable = PrettyTable(["No.","Narrative"])
             count = 1
+            #Add to data to table
             for each in json_data["route"]["legs"][0]["maneuvers"]:
                 myTable.add_row([count, (each["narrative"]) + " (" + str("{:.2f}".format(each["distance"]) + " miles)")])
                 count+=1

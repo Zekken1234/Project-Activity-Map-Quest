@@ -1,10 +1,19 @@
-import urllib.parse
-import requests
-from prettytable import PrettyTable
-
 from flask import Flask
 from flask import request
 from flask import render_template
+
+sample = Flask(__name__)
+
+@sample.route("/")
+def main():
+    return render_template("index.html")
+
+if __name__ == "__main__":
+    sample.run(host="0.0.0.0", port=5050)
+
+import urllib.parse
+import requests
+from prettytable import PrettyTable
 
 main_api = "https://www.mapquestapi.com/directions/v2/route?"
 key = "CLEOBL0GrYWUqQ1hKIOdbp4mE6XMAY35" #Replace with MapQuest key
@@ -21,15 +30,6 @@ class color:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
     END = '\033[0m'
-
-sample = Flask(__name__)
-
-@sample.route("/")
-def main():
-    return render_template("index.html")
-
-if __name__ == "__main__":
-    sample.run(host="0.0.0.0", port=8080)
 
 while True:
     #Ask for user input
